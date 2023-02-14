@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Map;
 
 @Controller
@@ -36,11 +36,11 @@ public class LoginController {
     @PostMapping(value = "/login", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public String add(@RequestBody Map<String, String> data) {
             User newUser = new User();
-            newUser.setLogin(data.get("login"));
+            newUser.setName(data.get("name"));
             newUser.setPassword(data.get("password"));
-            newUser.setRegTime(LocalDateTime.now());
-            int id = newUser.getId();
+            newUser.setEmail(data.get("email"));
+            newUser.setCreationDate(LocalDate.now());
             userRepository.save(newUser);
-            return "redirect:/" + id +"/quotes";
+            return "redirect:/quotes";
     }
 }

@@ -23,10 +23,9 @@ public class QuoteVote {
     @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
     private Integer userId;
 
-    @JoinColumn(name = "quote_id", nullable = false)
+    @Column(name = "quote_id", nullable = false)
     @Setter
     @Getter
-    @ManyToOne(targetEntity = Quote.class, cascade = CascadeType.ALL)
     private Integer quoteId;
 
     @Column(nullable = false)

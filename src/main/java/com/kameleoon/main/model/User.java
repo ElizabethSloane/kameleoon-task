@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "users")
@@ -19,19 +19,22 @@ public class User {
     @Column(nullable = false)
     @Setter
     @Getter
-    private String login;
+    private String name;
 
     @Column(nullable = false)
     @Setter
     @Getter
     private String password;
 
-    @Column(name = "reg_time", nullable = false)
+    @Column(nullable = false)
     @Setter
     @Getter
-    private LocalDateTime regTime;
+    private String email;
 
+    @Column(name = "creation_date", nullable = false)
     @Setter
     @Getter
-    private String photo;
+    private LocalDate creationDate;
+
+
 }
