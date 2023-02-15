@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  h2db:
+    image: h2:latest
+    restart: unless-stopped
+
+    environment:
+      - H2_ROOT_USER=sa
+      - H2_ROOT_PASSWORD=
+      - H2_DATABASE=quote.sql
+    ports:
+      - 8082:8083
+    volumes:
+      - db:/var/lib/h2
+  app:
+    depends_on:
+      - h2db
+    build: ./kameleoon-app
+    restart: on-failure
+
+    ports:
+      - 6868:8080
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url"  : "jdbc:h2:~/quote;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1",
+        "spring.datasource.username" : "sa",
+        "spring.datasource.password" : ,
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.H2Dialect",
+        "spring.jpa.hibernate.ddl-auto" : "update"
+      }'
+    volumes:
+      - .m2:/sa/.m2
+    stdin_open: true
+    tty: true
+
+volumes:
+  db:
